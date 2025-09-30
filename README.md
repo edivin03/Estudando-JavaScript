@@ -4,7 +4,7 @@ Este repositório contém meus estudos de **JavaScript**, organizados em aulas e
 
 ## 🚀 Estrutura
 
-- **aulas/** → exercícios diários (do dia 1 ao 30).
+- **aulas/** → exercícios diários.
 - **projetos/** → mini-aplicações práticas feitas ao longo do aprendizado.
 
 ## 📂 Aulas
@@ -20,12 +20,6 @@ Este repositório contém meus estudos de **JavaScript**, organizados em aulas e
 - HTML5
 - CSS3
 - JavaScript (ES6+)
-
-## 🌐 GitHub Pages
-
-Todos os projetos podem ser testados diretamente via **GitHub Pages**:
-
-👉 [Meu Portfólio JS](https://teu-usuario.github.io/javascript-30dias/)
 
 ## ✨ Objetivo
 
