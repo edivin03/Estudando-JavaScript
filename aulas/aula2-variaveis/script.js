@@ -1,4 +1,4 @@
-/* Variaveis
+ /* Variaveis
 
     const (CONSTANTE)
     let ()
