@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Etiquetas - BarcodeJS</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h2 { color: #1e293b; margin-bottom: 20px; }
+
+        .form-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        button {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        #barcode-card {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: none; /* Escondido até gerar */
+        }
+
+        svg { width: 100%; height: auto; }
+
+        .btn-print {
+            background: #10b981;
+            margin-top: 15px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gerador de Etiquetas</h2>
+    
+    <div class="form-group">
+        <input type="text" id="barcodeValue" placeholder="Ex: PRODUTO-123">
+        <button onclick="gerarSistema()">Gerar</button>
+    </div>
+
+    <div id="barcode-card">
+        <svg id="barcode"></svg>
+        <p id="label-text" style="font-weight: bold; color: #475569;"></p>
+        <button class="btn-print" onclick="window.print()">Imprimir Etiqueta</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+
+<script>
+    function gerarSistema() {
+        const valor = document.getElementById('barcodeValue').value;
+        const card = document.getElementById('barcode-card');
+        const labelText = document.getElementById('label-text');
+
+        if (valor.trim() === "") {
+            alert("Por favor, digite algo!");
+            return;
+        }
+
+        // Exibe o card
+        card.style.display = "block";
+        labelText.innerText = valor.toUpperCase();
+
+        // Chama a função da biblioteca para desenhar no SVG
+        JsBarcode("#barcode", valor, {
+            format: "CODE128",
+            lineColor: "#000",
+            width: 2,
+            height: 80,
+            displayValue: false // Já estamos exibindo no parágrafo abaixo
+        });
+    }
+</script>
+
+</body>
+</html>

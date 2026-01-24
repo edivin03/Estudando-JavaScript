@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerado de codigo de barras</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="card">
+    <h2>Gerador de Código de Barras</h2>
+    <input type="text" id="inputData" placeholder="Digite números ou letras..." oninput="gerar()">
+    <div id="barcode-container">
+        <svg id="barcode"></svg>
+    </div>
+</div>
+
+<script>
+    // Lógica JavaScript virá aqui
+    const patterns = {
+    '0': "212222", '1': "222122", '2': "222221", '3': "121223", 
+    'A': "111323", 'B': "131123", 'C': "131321" // Exemplo simplificado
+};
+
+// Função Principal
+function gerar() {
+    const data = document.getElementById('inputData').value.toUpperCase();
+    const svg = document.getElementById('barcode');
+    svg.innerHTML = ''; // Limpa o código anterior
+
+    if (!data) return;
+
+    let xCursor = 10; // Posição inicial no eixo X
+    const barHeight = 100;
+
+    // 1. Adiciona Barra de Início (Start Pattern)
+    desenharBarra(svg, "211212", xCursor, barHeight);
+    xCursor += 11 * 2; // Move o cursor
+
+    // 2. Converte cada letra do input em barras
+    for (let char of data) {
+        const pattern = patterns[char] || patterns['0']; // Fallback para '0'
+        renderizarPattern(svg, pattern, xCursor, barHeight);
+        xCursor += 11 * 2; 
+    }
+}
+// Função para renderizar o padrão de barras
+function renderizarPattern(svg, pattern, xOffset, height) {
+    let currentX = xOffset;
+    
+    for (let i = 0; i < pattern.length; i++) {
+        const width = parseInt(pattern[i]) * 2; // Multiplicador de escala
+        
+        // A cada dois índices, desenhamos uma barra preta (o outro é espaço branco)
+        if (i % 2 === 0) {
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", currentX);
+            rect.setAttribute("y", 10);
+            rect.setAttribute("width", width);
+            rect.setAttribute("height", height);
+            svg.appendChild(rect);
+        }
+        currentX += width;
+    }
+}
+</script>
+</body>
+</html>

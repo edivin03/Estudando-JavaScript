@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de QR Code Moderno</title>
+    <style>
+        :root { --primary: #6366f1; --bg: #f3f4f6; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 40px; }
+        .container { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 350px; text-align: center; }
+        input { width: 80%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; margin-bottom: 20px; outline: none; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        #qrcode-container { margin-top: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; border: 1px solid #f3f4f6; }
+        /* Ajuste para centralizar o QR Code gerado */
+        #qrcode img { border: 10px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>QR Code Generator</h2>
+    <input type="text" id="textInput" placeholder="Cole um link ou texto aqui">
+    <button onclick="gerarQRCode()">Gerar QR Code</button>
+
+    <div id="qrcode-container" style="display: none;">
+        <div id="qrcode"></div>
+        <p id="status" style="margin-top: 15px; font-size: 14px; color: #666;"></p>
+        <button style="background: #10b981; margin-top: 10px;" onclick="window.print()">Imprimir</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+    let qrcodeInstance = null;
+
+    function gerarQRCode() {
+        const texto = document.getElementById('textInput').value;
+        const container = document.getElementById('qrcode-container');
+        const qrcodeDiv = document.getElementById('qrcode');
+
+        if (!texto) return alert("Digite algo!");
+
+        container.style.display = "flex";
+        document.getElementById('status').innerText = "Conteúdo: " + texto;
+
+        // Limpa o QR Code anterior se existir
+        qrcodeDiv.innerHTML = "";
+
+        // Cria a instância do QR Code
+        qrcodeInstance = new QRCode(qrcodeDiv, {
+            text: texto,
+            width: 200,
+            height: 200,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H // Nível Alto de correção de erro
+        });
+    }
+</script>
+
+</body>
+</html>
